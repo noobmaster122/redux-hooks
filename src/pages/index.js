@@ -3,17 +3,19 @@ import { UserContext } from "../UserContext";
 //import { login } from "../utils/login";
 
 export function Index() {
-  const { user, setUser } = useContext(UserContext);
+  const { contextPars, contextDispatch } = useContext(UserContext);
 
   return (
     <div>
       <h2>Home</h2>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
-      {user ? (
+      <pre>{JSON.stringify(contextPars)}</pre>
+     
+      {contextPars.logged ? (
         <button
           onClick={() => {
             // call logout
-            setUser(null);
+          //  setUser({...user, logged: false, name: "", age: ""});
+          contextDispatch({type: 'logout'})
           }}
         >
           logout
@@ -22,8 +24,9 @@ export function Index() {
         <button
           onClick={async () => {
          //   const user = await login();
-         const userr= "ahmed";
-            setUser(userr);
+         contextDispatch({type: 'login'})
+        alert("the onclick works")
+           // setUser({...user, logged: true, name: "user1", age: "20"});
           }}
         >
           login

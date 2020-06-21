@@ -1,11 +1,19 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useReducer } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { Index } from "./pages/index";
 import { About } from "./pages/about";
 import { UserContext } from "./UserContext";
+import {initialState, reducer} from './pages/theReducer'
+
 
 function AppRouter() {
-  const [user, setUser] = useState(null);
+  /*const [user, setUser] = useState({
+    name: "", 
+    age: "", 
+    logged: false,
+  });*/
+
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   //const value = useMemo(() => ({ user, setUser }), [user, setUser]);
 
@@ -22,7 +30,7 @@ function AppRouter() {
             </li>
           </ul>
         </nav>
-        <UserContext.Provider value={{user, setUser}}>
+        <UserContext.Provider value={{contextPars: state, contextDispatch: dispatch}}>
           <Route path="/" exact component={Index} />
           <Route path="/about/" component={About} />
         </UserContext.Provider>
